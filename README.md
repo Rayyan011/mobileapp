@@ -1,243 +1,195 @@
-# 📱 Notes App - Mobile Development Learning Project
+# 📝 Notes App
 
-Welcome to your React Native notes app! This project is designed to help you learn mobile development using Expo Go - no simulators or complex setup required, just your phone and some basic tools.
+A modern, AI-powered notes application built with React Native and Expo, featuring intelligent note cleanup using Groq API.
 
-## 🎯 What You'll Learn
 
-- React Native fundamentals
-- Mobile UI components and styling with NativeWind (Tailwind CSS)
-- Navigation between screens
-- Form handling and validation
-- State management
-- Local storage
-- Internationalization (i18n)
-- Authentication flows
+
+## ✨ Features
+
+- 📝 **Create, Edit & Delete Notes** - Simple and intuitive note management
+- 🔍 **Search Functionality** - Quickly find notes by title
+- ✨ **AI-Powered Cleanup** - Improve and organize notes using Groq's Llama 3.3 model
+- 💾 **Local Storage** - Persistent data storage with AsyncStorage
+- 🎨 **8 Beautiful Themes** - Light, Dark, Blue, Green, Purple, Orange, Pink, and System
+- 📱 **Cross-Platform** - Works on both iOS and Android
+- 🎯 **Floating Action Button** - Quick access to create new notes
+- 🌙 **Dark Mode Support** - Full theme system with proper contrast
+
+## 🛠️ Tech Stack
+
+- **Expo SDK 53** - React Native framework
+- **React 19** - UI library
+- **Expo Router** - File-based routing
+- **MobX** - State management with persistence
+- **NativeWind** - Tailwind CSS for React Native
+- **Groq API** - AI note cleanup (Llama 3.3-70b)
+- **TypeScript** - Type safety
+- **React Query Kit** - API state management
+- **React Native Reanimated** - Smooth animations
 
 ## 📋 Prerequisites
 
-Before you start, make sure you have:
-- A smartphone (iOS or Android)
-- A computer with internet connection
-- Both devices connected to the **same WiFi network**
-
-## 🛠️ Installation Guide
-
-### Step 1: Install Node.js
-1. Go to [nodejs.org](https://nodejs.org/)
-2. Download and install the **LTS version** (recommended)
-3. Verify installation by opening terminal/command prompt and typing:
-   ```bash
-   node --version
-   npm --version
-   ```
-
-### Step 2: Install Yarn (Package Manager)
-```bash
-npm install -g yarn
-```
-Verify installation:
-```bash
-yarn --version
-```
-
-### Step 3: Install Expo CLI
-```bash
-npm install -g @expo/cli
-```
-
-### Step 4: Install Expo Go App on Your Phone
-
-#### For iOS:
-- Open App Store
-- Search for "Expo Go"
-- Install the app
-
-#### For Android:
-- Open Google Play Store
-- Search for "Expo Go"
-- Install the app
+- Node.js 20.19.4+
+- Yarn package manager
+- Expo Go app (for testing) or Xcode/Android Studio (for simulators)
+- Groq API key (for AI cleanup feature)
 
 ## 🚀 Getting Started
 
-### 1. Clone/Download This Project
-```bash
-# Clone the repository
-git clone <your-repo-url>.git
-cd notesapp
+### 1. Clone the Repository
 
-# Or download the ZIP file from GitHub and extract it
+```bash
+git clone https://github.com/Rayyan011/mobileapp.git
+cd mobileapp
 ```
 
-**Alternative: Download ZIP**
-1. Go to your repository URL
-2. Click the green "Code" button
-3. Select "Download ZIP"
-4. Extract the downloaded file
-
 ### 2. Install Dependencies
+
 ```bash
 yarn install
 ```
 
-### 3. Start the Development Server
+### 3. Configure Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+GROQ_API_KEY=your-groq-api-key-here
+```
+
+Get your free API key from [console.groq.com](https://console.groq.com)
+
+### 4. Start the Development Server
+
 ```bash
 yarn start
 ```
 
-You should see something like this:
+### 5. Run on Your Device
+
+- **iOS Simulator:** `yarn ios`
+- **Android Emulator:** `yarn android`
+- **Expo Go:** Scan the QR code with Expo Go app
+
+## 🎨 Themes
+
+The app includes 8 beautiful themes:
+
+- 🌞 **Light** - Clean white background
+- 🌙 **Dark** - Easy on the eyes dark mode
+- 💙 **Blue** - Blue-tinted dark theme
+- 💚 **Green** - Green-tinted light theme
+- 💜 **Purple** - Purple-tinted dark theme
+- 🧡 **Orange** - Orange-tinted light theme
+- 💗 **Pink** - Pink-tinted light theme
+- ⚙️ **System** - Follows device theme
+
+Access themes from Settings → Theme
+
+## 🤖 AI Cleanup Feature
+
+The app includes an AI-powered note cleanup feature:
+
+1. Open any note for editing
+2. Tap the **✨ Clean** button in the header
+3. The AI will improve grammar, fix spelling, and organize your note
+4. Watch the smooth animation as your note is rewritten
+
+**Powered by:** Groq's Llama 3.3-70b model
+
+## 📁 Project Structure
+
 ```
-Starting Metro Bundler
-▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-█ ▄▄▄▄▄ █▄▄▄ ▀█▄█▄█ ▄▄▄▄▄ █
-█ █   █ ██▄▀ █ ▀▄▄█ █   █ █
-█ █▄▄▄█ ██▀▄ ▄███▀█ █▄▄▄█ █
-▄▄▄▄▄▄▄█ ▀▄█ ▀▄█▄█▄▄▄▄▄▄▄█
-...
-
-› Metro waiting on exp://192.168.x.x:8081
-› Scan the QR code above with Expo Go (Android) or the Camera app (iOS)
+src/
+├── app/                    # Expo Router screens
+│   ├── (app)/             # Protected app screens
+│   │   ├── notes.tsx     # Notes list screen
+│   │   └── settings.tsx  # Settings screen
+│   ├── (auth)/           # Authentication screens
+│   │   ├── login.tsx     # Login screen
+│   │   └── onboarding.tsx # Onboarding screen
+│   └── notes/            # Note-related screens
+│       ├── add.tsx       # Note editor with AI cleanup
+│       └── [id].tsx     # Individual note view
+├── components/            # Reusable UI components
+│   ├── ui/               # Base UI components
+│   ├── note-card.tsx     # Note card component
+│   ├── note-editor.tsx  # Note editor component
+│   └── splash-screen.tsx # Custom splash screen
+├── stores/              # MobX state management
+│   ├── notes-store.ts   # Notes data store
+│   ├── auth-store.ts    # Authentication store
+│   └── ui-theme-store.ts # Theme management
+├── api/                 # API integrations
+│   └── notes/           # Notes API hooks
+│       └── use-cleanup-note.ts # AI cleanup hook
+├── hooks/               # Custom React hooks
+│   └── use-theme.tsx    # Theme hook
+└── lib/                 # Utilities
+    ├── theme.ts         # Theme definitions
+    └── i18n/            # Internationalization
 ```
-
-### 4. Open the App on Your Phone
-
-#### For iOS:
-1. Open the **Camera** app
-2. Point it at the QR code on your computer screen
-3. Tap the notification that appears
-4. The app will open in Expo Go
-
-#### For Android:
-1. Open the **Expo Go** app
-2. Tap "Scan QR Code"
-3. Point your camera at the QR code on your computer screen
-4. The app will load automatically
 
 ## 🔧 Development Commands
 
 ```bash
-# Start the development server
+# Start development server
 yarn start
 
-# Start with iOS simulator (if you have Xcode installed)
+# Run on iOS simulator
 yarn ios
 
-# Start with Android emulator (if you have Android Studio installed)
+# Run on Android emulator
 yarn android
 
-# Start web version
+# Run on web
 yarn web
 
-# Run linting
+# Lint code
 yarn lint
 
 # Format code
 yarn format
 ```
 
-## 📱 Features in This App
+## 🧪 Testing
 
-### 🎨 UI Components
-- **Buttons**: Various styles and states
-- **Forms**: Login form with validation
-- **Cards**: Display content beautifully
-- **Navigation**: Tab navigation and stack navigation
-- **Modals**: Bottom sheets and overlays
-
-### 🎯 Functionality
-- **Authentication**: Login/logout flow
-- **Storage**: Persistent data storage
-- **Theming**: Light/dark mode support
-- **Internationalization**: Multi-language support
-- **Form Validation**: Using Zod and React Hook Form
-
-### 🛠️ Technologies Used
-- **React Native**: Mobile app framework
-- **Expo**: Development platform
-- **NativeWind**: Tailwind CSS for React Native
-- **Expo Router**: File-based navigation
-- **React Hook Form**: Form handling
-- **Zod**: Schema validation
-- **AsyncStorage**: Local data storage
+Tested on:
+- ✅ iOS Simulator (Xcode)
+- ✅ Android Emulator (Android Studio)
+- ✅ Physical devices via Expo Go
 
 ## 🐛 Troubleshooting
 
 ### App Won't Load?
-1. **Check WiFi**: Ensure both devices are on the same network
-2. **Restart Metro**: Press `r` in the terminal to reload
-3. **Clear Cache**: Press `Shift + r` for a full reload
-4. **Restart Expo Go**: Close and reopen the Expo Go app
+- Ensure both devices are on the same WiFi network
+- Press `r` in terminal to reload
+- Press `Shift + r` for full reload
+- Restart Expo Go app
 
-### QR Code Not Working?
-1. **Manual Connection**: In Expo Go, tap "Enter URL manually" and type the URL shown in terminal
-2. **Network Issues**: Try connecting to a different WiFi network
-3. **Firewall**: Check if your computer's firewall is blocking the connection
+### AI Cleanup Not Working?
+- Verify `GROQ_API_KEY` is set in `.env` file
+- Restart the Expo dev server after adding API key
+- Check console for error messages
 
-### Development Server Issues?
-```bash
-# Clear Expo cache
-expo start --clear
+### Theme Not Applying?
+- Clear app cache: `yarn start --clear`
+- Restart the app completely
 
-# Reset Metro cache
-yarn start --reset-cache
-```
+## 📝 Notes
 
-## 📚 Learning Path
+- Notes are stored locally using AsyncStorage
+- Data persists across app restarts
+- AI cleanup requires internet connection
+- Theme preferences are saved automatically
 
-### Beginner Level
-1. **Explore the UI**: Navigate through different screens
-2. **Modify Text**: Change some text content and see live updates
-3. **Styling**: Experiment with NativeWind classes
-4. **Components**: Look at how components are structured
+## 🔐 Environment Variables
 
-### Intermediate Level
-1. **Add New Screens**: Create additional pages
-2. **Form Handling**: Build new forms with validation
-3. **State Management**: Add new features with local state
-4. **Storage**: Implement data persistence
+Required:
+- `GROQ_API_KEY` - Your Groq API key for AI features
 
-### Advanced Level
-1. **API Integration**: Connect to external services
-2. **Custom Components**: Build reusable UI components
-3. **Performance**: Optimize app performance
-4. **Testing**: Add unit and integration tests
+Optional:
+- `API_URL` - Backend API URL (if using)
+- `SECRET_KEY` - Secret key for API (if using)
 
-## 📖 File Structure
 
-```
-src/
-├── app/                    # App screens (file-based routing)
-│   ├── (app)/             # Protected app screens
-│   ├── login.tsx          # Login screen
-│   ├── onboarding.tsx     # Onboarding screen
-│   └── _layout.tsx        # Root layout
-├── components/            # Reusable UI components
-│   ├── ui/               # Base UI components
-│   └── ...               # Feature components
-├── lib/                  # Utilities and configurations
-│   ├── auth/             # Authentication logic
-│   ├── hooks/            # Custom React hooks
-│   ├── i18n/             # Internationalization
-│   └── storage.tsx       # Local storage utilities
-└── translations/         # Language files
-```
-
-## 🤝 Getting Help
-
-1. **Read the Code**: Comments explain what each part does
-2. **Expo Documentation**: [docs.expo.dev](https://docs.expo.dev)
-3. **React Native Docs**: [reactnative.dev](https://reactnative.dev)
-4. **Ask Questions**: Don't hesitate to ask your instructor
-
-## 🎉 Next Steps
-
-Once you're comfortable with this project:
-1. Try building your own screens
-2. Add new features
-3. Experiment with different UI components
-4. Build your own app from scratch
-
----
-
-**Happy Coding! 🚀**
-
-*Remember: The best way to learn is by doing. Don't be afraid to break things - that's how you learn!*
