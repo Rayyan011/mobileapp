@@ -1,6 +1,6 @@
 # 📝 Notes App
 
-A modern, AI-powered notes application built with React Native and Expo, featuring intelligent note cleanup using Groq API.
+A modern, AI-powered notes application built with React Native and Expo, featuring intelligent note cleanup using Groq API from groq.com.
 
 
 
