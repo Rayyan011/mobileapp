@@ -3,100 +3,107 @@ import { hydrateStore, makePersistable } from 'mobx-persist-store';
 import { colorScheme } from 'nativewind';
 import { Appearance } from 'react-native';
 import type { Theme } from '@react-navigation/native';
-import { DarkTheme, LightTheme } from '@/lib/theme';
+import { themes, themeIsDark, type ThemeId } from '@/lib/theme';
 import { AppearanceMode, PVoid, UIAppearance } from './types';
-// import * as Updates from "expo-updates";
-
 
 export class UIThemeStore {
   isSystemAppearance = false;
-  appearance: AppearanceMode = "light";
+  themeId: ThemeId = 'light';
   systemColorScheme: AppearanceMode | null = Appearance.getColorScheme() || 'light';
   private appearanceListener: any = null;
 
-  setAppearanceMode = async (v: UIAppearance): Promise<void> => {
-    this.isSystemAppearance = v === "System";
-    this.appearance = this.appearanceFromUIToInternal(v);
-    // await Updates.reloadAsync();
+  private themeIdToUIAppearance = (id: ThemeId): UIAppearance => {
+    const map: Record<ThemeId, UIAppearance> = {
+      light: 'Light',
+      dark: 'Dark',
+      blue: 'Blue',
+      green: 'Green',
+      purple: 'Purple',
+      orange: 'Orange',
+      pink: 'Pink',
+    };
+    return map[id];
   };
 
-  get appearanceName(): UIAppearance {
-    return this.isSystemAppearance
-      ? "System"
-      : this.appearanceFromInternalToUI(this.appearance);
-  }
-
-  private appearanceFromInternalToUI = (v: AppearanceMode): UIAppearance => {
-    return v === "light" ? "Light" : "Dark";
+  private uiAppearanceToThemeId = (appearance: UIAppearance): ThemeId => {
+    if (appearance === 'System') return 'light';
+    const map: Record<UIAppearance, ThemeId> = {
+      System: 'light',
+      Light: 'light',
+      Dark: 'dark',
+      Blue: 'blue',
+      Green: 'green',
+      Purple: 'purple',
+      Orange: 'orange',
+      Pink: 'pink',
+    };
+    return map[appearance];
   };
 
-  private appearanceFromUIToInternal = (v: UIAppearance): AppearanceMode => {
-    return v === "Light" ? "light" : "dark";
-  };
-
-  // Alias methods for consistency with existing hooks
   get selectedTheme(): UIAppearance {
     if (this.isSystemAppearance) return 'System';
-    return this.appearanceFromInternalToUI(this.appearance);
+    return this.themeIdToUIAppearance(this.themeId);
   }
 
   setSelectedTheme = (theme: UIAppearance): void => {
     if (theme === 'System') {
       this.isSystemAppearance = true;
+      // Use system preference for theme selection
+      const systemTheme = this.systemColorScheme === 'dark' ? 'dark' : 'light';
+      this.themeId = systemTheme;
     } else {
       this.isSystemAppearance = false;
-      this.appearance = this.appearanceFromUIToInternal(theme);
+      this.themeId = this.uiAppearanceToThemeId(theme);
     }
     
-    // Sync with NativeWind
-    const nativeWindTheme = theme === 'System' ? 'system' : theme.toLowerCase() as 'light' | 'dark' | 'system';
-    colorScheme.set(nativeWindTheme);
+    // Sync with NativeWind - determine if theme is dark or light
+    const isDarkTheme = themeIsDark[this.themeId];
+    const nativeWindValue = this.isSystemAppearance 
+      ? 'system' 
+      : (isDarkTheme ? 'dark' : 'light');
+    colorScheme.set(nativeWindValue as 'light' | 'dark' | 'system');
   };
 
-  // Get React Navigation theme based on current appearance
   get navigationTheme(): Theme {
     if (this.isSystemAppearance) {
-      return this.systemColorScheme === 'dark' ? DarkTheme : LightTheme;
+      const systemTheme = this.systemColorScheme === 'dark' ? 'dark' : 'light';
+      return themes[systemTheme];
     }
-    return this.appearance === 'dark' ? DarkTheme : LightTheme;
+    return themes[this.themeId];
   }
 
-  // Get the current effective appearance mode (resolves System to actual mode)
   get effectiveAppearance(): AppearanceMode {
     if (this.isSystemAppearance) {
       return this.systemColorScheme || 'light';
     }
-    return this.appearance;
+    // Determine if current theme is dark or light
+    return themeIsDark[this.themeId] ? 'dark' : 'light';
   }
 
   private setupAppearanceListener = () => {
-    // Clean up existing listener if any
     if (this.appearanceListener) {
       this.appearanceListener.remove();
     }
-
-    // Listen to system appearance changes
     this.appearanceListener = Appearance.addChangeListener(({ colorScheme }) => {
       this.systemColorScheme = colorScheme || 'light';
+      // Update theme if system appearance is enabled
+      if (this.isSystemAppearance) {
+        const systemTheme = colorScheme === 'dark' ? 'dark' : 'light';
+        this.themeId = systemTheme;
+      }
     });
   };
 
   constructor() {
     makeAutoObservable(this);
     makePersistable(this, {
-      name: "UITheme",
-      properties: [
-        "isSystemAppearance",
-        "appearance",
-      ],
+      name: 'UITheme',
+      properties: ['isSystemAppearance', 'themeId'],
       debugMode: false,
     });
-    
-    // Setup appearance listener
     this.setupAppearanceListener();
   }
 
-  // Cleanup method
   dispose = () => {
     if (this.appearanceListener) {
       this.appearanceListener.remove();
@@ -107,4 +114,3 @@ export class UIThemeStore {
     await hydrateStore(this);
   };
 }
-

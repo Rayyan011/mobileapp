@@ -1,4 +1,4 @@
-export type UIAppearance = "System" | "Light" | "Dark";
+export type UIAppearance = "System" | "Light" | "Dark" | "Blue" | "Green" | "Purple" | "Orange" | "Pink";
 export type AppearanceMode = "light" | "dark";
 
 export type AppearanceAction = {

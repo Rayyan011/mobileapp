@@ -7,37 +7,32 @@ import type {
 } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import type { TextInputProps } from 'react-native';
-import { I18nManager, StyleSheet, useColorScheme, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
 import { tv } from 'tailwind-variants';
 
+import { useTheme } from '@/hooks';
 import colors from './colors';
 import { Text } from './text';
 
 const inputTv = tv({
   slots: {
     container: 'mb-2',
-    label: 'text-grey-100 mb-1 text-lg dark:text-neutral-100',
-    input:
-      'mt-0 rounded-xl border-[0.5px] border-neutral-300 bg-neutral-100 px-4 py-3 font-inter text-base  font-medium leading-5 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white',
+    label: 'mb-1 text-lg',
+    input: 'mt-0 rounded-xl border-[0.5px] px-4 py-3 font-inter text-base font-medium leading-5',
   },
-
   variants: {
     focused: {
-      true: {
-        input: 'border-neutral-400 dark:border-neutral-300',
-      },
+      true: {},
     },
     error: {
       true: {
         input: 'border-danger-600',
-        label: 'text-danger-600 dark:text-danger-600',
+        label: 'text-danger-600',
       },
     },
     disabled: {
-      true: {
-        input: 'bg-neutral-200',
-      },
+      true: {},
     },
   },
   defaultVariants: {
@@ -74,7 +69,7 @@ interface ControlledInputProps<T extends FieldValues>
 export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
   const { label, error, testID, ...inputProps } = props;
   const [isFocussed, setIsFocussed] = React.useState(false);
-  const colorScheme = useColorScheme();
+  const { colors: themeColors, isDark } = useTheme();
   const onBlur = React.useCallback(() => setIsFocussed(false), []);
   const onFocus = React.useCallback(() => setIsFocussed(true), []);
 
@@ -88,15 +83,9 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
     [error, isFocussed, props.disabled]
   );
 
-  const placeholderColor = React.useMemo(
-    () => (colorScheme === 'dark' ? colors.neutral[500] : colors.neutral[400]),
-    [colorScheme]
-  );
-
-  const textColor = React.useMemo(
-    () => (colorScheme === 'dark' ? colors.charcoal[100] : colors.charcoal[900]),
-    [colorScheme]
-  );
+  const inputBg = isDark ? colors.charcoal[800] : colors.neutral[100];
+  const inputBorder = isDark ? colors.charcoal[700] : colors.charcoal[300];
+  const placeholderColor = isDark ? colors.charcoal[500] : colors.charcoal[400];
 
   return (
     <View className={styles.container()}>
@@ -117,16 +106,20 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
         onFocus={onFocus}
         {...inputProps}
         style={StyleSheet.flatten([
-          { writingDirection: 'ltr' }, // Force left-to-right
-          { textAlign: 'left' }, // Force left alignment
-          { color: textColor }, // Explicit text color for dark mode
+          {
+            writingDirection: 'ltr',
+            textAlign: 'left',
+            backgroundColor: inputBg,
+            borderColor: inputBorder,
+            color: themeColors.text,
+          },
           inputProps.style,
         ])}
       />
       {error && (
         <Text
           testID={testID ? `${testID}-error` : undefined}
-          className="text-sm text-danger-400 dark:text-danger-600"
+          className="text-sm text-danger-400"
         >
           {error}
         </Text>
@@ -135,7 +128,6 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
   );
 });
 
-// only used with react-hook-form
 export function ControlledInput<T extends FieldValues>(
   props: ControlledInputProps<T>
 ) {

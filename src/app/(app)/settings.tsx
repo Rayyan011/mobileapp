@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 
 import { Item } from '@/components/settings/item';
 import { ItemsContainer } from '@/components/settings/items-container';
-import { LanguageItem } from '@/components/settings/language-item';
 import { ThemeItem } from '@/components/settings/theme-item';
 import {
   FocusAwareStatusBar,
@@ -13,20 +12,21 @@ import {
 } from '@/components/ui';
 import { translate } from '@/lib';
 import { useAuth } from '@/app/providers/auth/auth-provider';
+import { useTheme } from '@/hooks';
 
 export default observer(function Settings() {
   const { signOut } = useAuth();
+  const { colors: themeColors } = useTheme();
     
   return (
     <>
       <FocusAwareStatusBar />
-      <ScrollView>
-        <View className="flex-1 px-4 pt-16 ">
+      <ScrollView style={{ backgroundColor: themeColors.background }}>
+        <View className="flex-1 px-4 pt-16">
           <Text className="text-xl font-bold">
             {translate('settings.title')}
           </Text>
           <ItemsContainer title="settings.generale">
-            <LanguageItem />
             <ThemeItem />
           </ItemsContainer>
 

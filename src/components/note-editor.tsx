@@ -7,6 +7,7 @@ import Animated, {
   withSequence,
   Easing 
 } from 'react-native-reanimated';
+import { useTheme } from '@/hooks';
 import colors from './ui/colors';
 
 interface NoteEditorProps {
@@ -30,16 +31,15 @@ export const NoteEditor = ({
   contentPlaceholder = 'Start writing...',
   animateUpdate = false,
 }: NoteEditorProps) => {
+  const { colors: themeColors, isDark } = useTheme();
   const titleOpacity = useSharedValue(1);
   const contentOpacity = useSharedValue(1);
   const titleScale = useSharedValue(1);
   const contentScale = useSharedValue(1);
   const prevAnimateRef = useRef(false);
 
-  // Animate only when animateUpdate prop changes from false to true
   useEffect(() => {
     if (animateUpdate && !prevAnimateRef.current) {
-      // Trigger animation for both title and content
       titleOpacity.value = withSequence(
         withTiming(0.3, { duration: 150, easing: Easing.out(Easing.ease) }),
         withTiming(1, { duration: 300, easing: Easing.in(Easing.ease) })
@@ -71,16 +71,26 @@ export const NoteEditor = ({
     transform: [{ scale: contentScale.value }],
   }));
 
+  const borderColor = isDark ? colors.charcoal[700] : colors.charcoal[200];
+  const placeholderColor = isDark ? colors.charcoal[500] : colors.charcoal[400];
+
   return (
-    <View className="flex-1">
-      <View className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-700">
+    <View className="flex-1" style={{ backgroundColor: themeColors.background }}>
+      <View 
+        className="border-b px-4 py-3"
+        style={{ borderColor }}
+      >
         <AnimatedTextInput
           value={title}
           onChangeText={onTitleChange}
           placeholder={titlePlaceholder}
-          placeholderTextColor={colors.neutral[400]}
-          className="text-2xl font-bold text-black dark:text-white"
-          style={[styles.titleInput, titleAnimatedStyle]}
+          placeholderTextColor={placeholderColor}
+          className="text-2xl font-bold"
+          style={[
+            styles.titleInput,
+            titleAnimatedStyle,
+            { color: themeColors.text },
+          ]}
           autoFocus={false}
         />
       </View>
@@ -89,9 +99,13 @@ export const NoteEditor = ({
           value={content}
           onChangeText={onContentChange}
           placeholder={contentPlaceholder}
-          placeholderTextColor={colors.neutral[400]}
-          className="flex-1 text-base leading-6 text-black dark:text-white"
-          style={[styles.contentInput, contentAnimatedStyle]}
+          placeholderTextColor={placeholderColor}
+          className="flex-1 text-base leading-6"
+          style={[
+            styles.contentInput,
+            contentAnimatedStyle,
+            { color: themeColors.text },
+          ]}
           multiline
           textAlignVertical="top"
           autoFocus={true}
@@ -109,4 +123,3 @@ const styles = StyleSheet.create({
     minHeight: 400,
   },
 });
-

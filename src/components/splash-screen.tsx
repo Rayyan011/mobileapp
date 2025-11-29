@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, useColorScheme } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -9,12 +9,12 @@ import Animated, {
   Easing,
   interpolate,
 } from 'react-native-reanimated';
+import { useTheme } from '@/hooks';
 import { Text } from './ui';
 import colors from './ui/colors';
 
 export function SplashScreen() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const { colors: themeColors, isDark } = useTheme();
   const opacity = useSharedValue(0);
   const scale = useSharedValue(0.8);
   const rotation = useSharedValue(0);
@@ -63,11 +63,11 @@ export function SplashScreen() {
   };
 
   const titleStyle = {
-    color: isDark ? colors.charcoal[100] : colors.charcoal[900],
+    color: themeColors.text,
   };
 
   const subtitleStyle = {
-    color: isDark ? colors.charcoal[400] : colors.charcoal[600],
+    color: isDark ? colors.charcoal[300] : colors.charcoal[600],
   };
 
   return (

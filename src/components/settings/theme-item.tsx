@@ -21,10 +21,15 @@ export const ThemeItem = observer(() => {
     [uiTheme, modal]
   );
 
-  // translate() is already reactive to language changes
-  const themes = [
-    { label: `${translate('settings.theme.dark')} 🌙`, value: 'Dark' },
+  // All available themes with emojis
+  const themes: OptionType[] = [
     { label: `${translate('settings.theme.light')} 🌞`, value: 'Light' },
+    { label: `${translate('settings.theme.dark')} 🌙`, value: 'Dark' },
+    { label: `Blue 💙`, value: 'Blue' },
+    { label: `Green 💚`, value: 'Green' },
+    { label: `Purple 💜`, value: 'Purple' },
+    { label: `Orange 🧡`, value: 'Orange' },
+    { label: `Pink 💗`, value: 'Pink' },
     { label: `${translate('settings.theme.system')} ⚙️`, value: 'System' },
   ];
 
