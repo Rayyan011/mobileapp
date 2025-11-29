@@ -226,7 +226,7 @@ export const SwitchIcon = ({ checked = false }: IconProps) => {
           right: 0,
         }}
         animate={{
-          translateX: I18nManager.isRTL ? translateX : -translateX,
+          translateX: -translateX, // Always LTR
         }}
         transition={{ translateX: { overshootClamping: true } }}
       />

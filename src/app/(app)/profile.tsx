@@ -7,7 +7,7 @@ export default function Profile() {
       <FocusAwareStatusBar />
       <ScrollView>
         <View className="flex-1 px-4 pt-16">
-          <Text className="text-xl font-bold">Profile Tab</Text>
+          <Text className="text-xl font-bold">Profi Tab</Text>
           <Text className="mt-4 text-base">This is a test profile tab.</Text>
         </View>
       </ScrollView>

@@ -24,23 +24,26 @@ export default function Onboarding() {
       </View>
       <View className="justify-end ">
         <Text className="my-3 text-center text-5xl font-bold">
-          Villa Starter
+          AI Notes App
         </Text>
         <Text className="mb-2 text-center text-lg text-gray-600">
-          The right way to build your mobile app
+          Capture your thoughts, organize your ideas
         </Text>
 
         <Text className="my-1 pt-6 text-left text-lg">
-          🚀 Production-ready{' '}
+          📝 Create and edit notes instantly{' '}
         </Text>
         <Text className="my-1 text-left text-lg">
-          🥷 Developer experience + Productivity
+          🔍 Search through all your notes
         </Text>
         <Text className="my-1 text-left text-lg">
-          🧩 Minimal code and dependencies
+          💾 Your notes saved locally, always available
         </Text>
         <Text className="my-1 text-left text-lg">
-          💪 well maintained third-party libraries
+          🌙 Beautiful dark mode support
+        </Text>
+        <Text className="my-1 text-left text-lg">
+          🤖 Emoji AI powered note cleaning and improvement
         </Text>
       </View>
       <SafeAreaView className="mt-6">

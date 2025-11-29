@@ -2,10 +2,10 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: "expo-go-villa-sample",
-    slug: "expo-go-villa-sample",
+    name: "notesapp",
+    slug: "notesapp",
     version: "1.0.0",
-    scheme: "expo-go-villa-sample",
+    scheme: "notesapp",
     platforms: ["ios", "android"],
     web: {
       bundler: "metro",
@@ -51,6 +51,7 @@ export default {
       SECRET_KEY: process.env.SECRET_KEY,
       VAR_NUMBER: process.env.VAR_NUMBER,
       VAR_BOOL: process.env.VAR_BOOL,
+      GROQ_API_KEY: process.env.GROQ_API_KEY,
     }
   }
 };

@@ -1,5 +1,5 @@
 {
-  "name": "expo-go-villa-sample",
+  "name": "notesapp",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
@@ -12,12 +12,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@ai-sdk/groq": "^2.0.31",
     "@gorhom/bottom-sheet": "^5.2.6",
     "@hookform/resolvers": "^5.2.2",
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-navigation/native": "^7.1.6",
     "@shopify/flash-list": "1.7.6",
     "@tanstack/react-query": "^5.90.2",
+    "ai": "^5.0.101",
     "axios": "^1.7.5",
     "class-variance-authority": "^0.7.1",
     "dotenv": "^17.2.3",

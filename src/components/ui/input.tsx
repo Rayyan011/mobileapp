@@ -7,7 +7,7 @@ import type {
 } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import type { TextInputProps } from 'react-native';
-import { I18nManager, StyleSheet, View } from 'react-native';
+import { I18nManager, StyleSheet, useColorScheme, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
 import { tv } from 'tailwind-variants';
 
@@ -74,6 +74,7 @@ interface ControlledInputProps<T extends FieldValues>
 export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
   const { label, error, testID, ...inputProps } = props;
   const [isFocussed, setIsFocussed] = React.useState(false);
+  const colorScheme = useColorScheme();
   const onBlur = React.useCallback(() => setIsFocussed(false), []);
   const onFocus = React.useCallback(() => setIsFocussed(true), []);
 
@@ -85,6 +86,16 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
         disabled: Boolean(props.disabled),
       }),
     [error, isFocussed, props.disabled]
+  );
+
+  const placeholderColor = React.useMemo(
+    () => (colorScheme === 'dark' ? colors.neutral[500] : colors.neutral[400]),
+    [colorScheme]
+  );
+
+  const textColor = React.useMemo(
+    () => (colorScheme === 'dark' ? colors.charcoal[100] : colors.charcoal[900]),
+    [colorScheme]
   );
 
   return (
@@ -100,14 +111,15 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
       <NTextInput
         testID={testID}
         ref={ref}
-        placeholderTextColor={colors.neutral[400]}
+        placeholderTextColor={placeholderColor}
         className={styles.input()}
         onBlur={onBlur}
         onFocus={onFocus}
         {...inputProps}
         style={StyleSheet.flatten([
-          { writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' },
-          { textAlign: I18nManager.isRTL ? 'right' : 'left' },
+          { writingDirection: 'ltr' }, // Force left-to-right
+          { textAlign: 'left' }, // Force left alignment
+          { color: textColor }, // Explicit text color for dark mode
           inputProps.style,
         ])}
       />

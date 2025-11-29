@@ -1,12 +1,13 @@
 import '../../global.css';
 
-import { Stack, SplashScreen } from 'expo-router';
+import { Stack, SplashScreen as ExpoSplashScreen } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { hydrateStores } from '@/stores';
 import { Providers } from './providers';
+import { SplashScreen as CustomSplashScreen } from '@/components/splash-screen';
 
 // Prevent the splash screen from auto-hiding
-SplashScreen.preventAutoHideAsync();
+ExpoSplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [isHydrated, setIsHydrated] = useState(false);
@@ -28,9 +29,9 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (isHydrated) {
-      // Hide splash screen once the app is ready
+      // Hide native splash screen once the app is ready
       const hideSplash = async () => {
-        await SplashScreen.hideAsync();
+        await ExpoSplashScreen.hideAsync();
       };
       
       // Small delay to ensure smooth transition
@@ -40,14 +41,16 @@ export default function RootLayout() {
     }
   }, [isHydrated]);
 
+  // Show custom splash screen while hydrating
   if (!isHydrated) {
-    return null; // or a loading screen
+    return <CustomSplashScreen />;
   }
 
   return (
     <Providers>
       <Stack>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
+        <Stack.Screen name="notes" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
       </Stack>

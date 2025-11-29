@@ -1,6 +1,6 @@
-# 📱 Expo Go Villa Sample - Mobile Development Learning Project
+# 📱 Notes App - Mobile Development Learning Project
 
-Welcome to your first React Native mobile app! This project is designed to help you learn mobile development using Expo Go - no simulators or complex setup required, just your phone and some basic tools.
+Welcome to your React Native notes app! This project is designed to help you learn mobile development using Expo Go - no simulators or complex setup required, just your phone and some basic tools.
 
 ## 🎯 What You'll Learn
 
@@ -62,14 +62,14 @@ npm install -g @expo/cli
 ### 1. Clone/Download This Project
 ```bash
 # Clone the repository
-git clone https://github.com/Yasir5247/RN-ExpoGo-Villa-Sample.git
-cd RN-ExpoGo-Villa-Sample
+git clone <your-repo-url>.git
+cd notesapp
 
 # Or download the ZIP file from GitHub and extract it
 ```
 
 **Alternative: Download ZIP**
-1. Go to [https://github.com/Yasir5247/RN-ExpoGo-Villa-Sample](https://github.com/Yasir5247/RN-ExpoGo-Villa-Sample)
+1. Go to your repository URL
 2. Click the green "Code" button
 3. Select "Download ZIP"
 4. Extract the downloaded file

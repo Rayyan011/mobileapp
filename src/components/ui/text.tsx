@@ -32,7 +32,7 @@ export const Text = observer(({
     () =>
       StyleSheet.flatten([
         {
-          writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr',
+          writingDirection: 'ltr', // Force left-to-right
         },
         style,
       ]) as TextStyle,

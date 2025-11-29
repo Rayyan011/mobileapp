@@ -3,18 +3,20 @@ import React from 'react';
 import './_hydration';
 
 import { AuthStore, TokenType, AuthStatus } from './auth-store';
+import { NotesStore, Note } from './notes-store';
 import { UILanguageStore } from './ui-language-store';
 import { UIThemeStore } from './ui-theme-store';
 import { IStore, PVoid } from './types';
 
 // Re-export types
-export type { TokenType, AuthStatus };
+export type { TokenType, AuthStatus, Note };
 
 // Centralized stores object
 class Stores {
   auth = new AuthStore()
   uiLanguage = new UILanguageStore()
   uiTheme = new UIThemeStore()
+  notes = new NotesStore()
 };
 
 export const stores = new Stores();

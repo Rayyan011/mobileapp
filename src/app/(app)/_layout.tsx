@@ -1,14 +1,8 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { Link, Redirect, Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 
-import { Pressable, Text } from '@/components/ui';
-import {
-  Feed as FeedIcon,
-  Settings as SettingsIcon,
-  Style as StyleIcon,
-  Home as ProfileIcon,
-} from '@/components/ui/icons';
+import { Note as NoteIcon, Settings as SettingsIcon } from '@/components/ui/icons';
 import { useAuth } from '@/app/providers/auth/auth-provider';
 
 export default function TabLayout() {
@@ -23,32 +17,17 @@ export default function TabLayout() {
   }
   
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerShown: true,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="notes"
         options={{
-          title: 'Feed',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
-          headerRight: () => <CreateNewPostLink />,
-          tabBarButtonTestID: 'feed-tab',
-        }}
-      />
-      <Tabs.Screen
-        name="style"
-        options={{
-          title: 'Style',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <StyleIcon color={color} />,
-          tabBarButtonTestID: 'style-tab',
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <ProfileIcon color={color} />,
-          tabBarButtonTestID: 'profile-tab',
+          title: 'Notes',
+          tabBarIcon: ({ color }) => <NoteIcon color={color} />,
+          tabBarButtonTestID: 'notes-tab',
         }}
       />
       <Tabs.Screen
@@ -60,16 +39,24 @@ export default function TabLayout() {
           tabBarButtonTestID: 'settings-tab',
         }}
       />
+      <Tabs.Screen
+        name="index"
+        options={{
+          href: null, // Hide this tab
+        }}
+      />
+      <Tabs.Screen
+        name="style"
+        options={{
+          href: null, // Hide this tab
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          href: null, // Hide this tab
+        }}
+      />
     </Tabs>
   );
 }
-
-const CreateNewPostLink = () => {
-  return (
-    <Link href={"/feed/add-post" as any} asChild>
-      <Pressable>
-        <Text className="px-3 text-primary-300">Create</Text>
-      </Pressable>
-    </Link>
-  );
-};

@@ -8,10 +8,10 @@ import { resources } from './resources';
 
 export type { TxKeyPath } from './types';
 
-// Initialize i18next
+// Initialize i18next - Force English only
 i18n.use(initReactI18next).init({
   resources,
-  lng: stores.uiLanguage.language || Localization.getLocales()[0]?.languageCode || 'en',
+  lng: 'en',
   fallbackLng: 'en',
   compatibilityJSON: 'v4',
   interpolation: {
@@ -19,10 +19,9 @@ i18n.use(initReactI18next).init({
   },
 });
 
-// Setup RTL
-const isRTL = i18n.language === 'ar';
-I18nManager.allowRTL(isRTL);
-I18nManager.forceRTL(isRTL);
+// Force LTR (left-to-right) - disable RTL
+I18nManager.allowRTL(false);
+I18nManager.forceRTL(false);
 
 // Translation function - accesses store to make it reactive
 export const translate = (key: string, options?: any): string => {
@@ -34,6 +33,12 @@ export const translate = (key: string, options?: any): string => {
 // Sync i18next with language change
 export const syncLanguage = (lang: string) => {
   i18n.changeLanguage(lang);
+  // Always force LTR
+  I18nManager.allowRTL(false);
+  I18nManager.forceRTL(false);
 };
+
+// Always return false for RTL (force LTR)
+export const isRTL = false;
 
 export default i18n;
