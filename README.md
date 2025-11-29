@@ -7,6 +7,7 @@ A modern, AI-powered notes application built with React Native and Expo, featuri
 ## ✨ Features
 
 - 📝 **Create, Edit & Delete Notes** - Simple and intuitive note management
+- 💾 **Auto-Save** - Notes are automatically saved as you type - no save button needed!
 - 🔍 **Search Functionality** - Quickly find notes by title
 - ✨ **AI-Powered Cleanup** - Improve and organize notes using Groq's Llama 3.3 model
 - 💾 **Local Storage** - Persistent data storage with AsyncStorage
@@ -86,6 +87,15 @@ The app includes 8 beautiful themes:
 
 Access themes from Settings → Theme
 
+## 💾 Auto-Save Feature
+
+Notes are **automatically saved** as you type - there's no save button needed!
+
+- **Real-time saving:** Changes are saved automatically while you write
+- **No data loss:** Your work is preserved even if you navigate away
+- **Seamless experience:** Just start typing and your notes are saved instantly
+- **Works offline:** All data is stored locally on your device
+
 ## 🤖 AI Cleanup Feature
 
 The app includes an AI-powered note cleanup feature:
@@ -94,6 +104,7 @@ The app includes an AI-powered note cleanup feature:
 2. Tap the **✨ Clean** button in the header
 3. The AI will improve grammar, fix spelling, and organize your note
 4. Watch the smooth animation as your note is rewritten
+5. The cleaned note is automatically saved
 
 **Powered by:** Groq's Llama 3.3-70b model
 
@@ -178,10 +189,12 @@ Tested on:
 
 ## 📝 Notes
 
-- Notes are stored locally using AsyncStorage
-- Data persists across app restarts
-- AI cleanup requires internet connection
-- Theme preferences are saved automatically
+- **Auto-save:** Notes are automatically saved as you type - no manual save needed
+- **Local storage:** Notes are stored locally using AsyncStorage
+- **Data persistence:** All notes persist across app restarts
+- **Offline-first:** Works completely offline - no internet required for note-taking
+- **AI cleanup:** Requires internet connection (uses Groq API)
+- **Theme preferences:** Saved automatically and persist across sessions
 
 ## 🔐 Environment Variables
 
