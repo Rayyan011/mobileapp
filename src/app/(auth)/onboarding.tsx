@@ -43,7 +43,7 @@ export default function Onboarding() {
           🌙 Beautiful dark mode support
         </Text>
         <Text className="my-1 text-left text-lg">
-          🤖 Emoji AI powered note cleaning and improvement
+          🤖  AI powered note cleaning and improvement
         </Text>
       </View>
       <SafeAreaView className="mt-6">
